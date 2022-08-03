@@ -5,3 +5,8 @@
 - ./composer install
 - ./vendor/bin/sail up
 - Navigate to localhost
+
+## Goal
+
+As a user, I want to search for countries by name, full name, or country code, and view them as
+a list of elements on an HTML page so that I can find the country data I am looking for.
