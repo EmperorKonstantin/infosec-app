@@ -45,6 +45,7 @@
                     searchRESTCountries: '',
                     isLoading: false,
                     countries: null,
+                    stats: [],
                     fetchCountries() {
                         this.isLoading = true;
                         fetch(`http://localhost/api/country/${this.searchRESTCountries}`)
@@ -95,30 +96,50 @@
                                         >
                                             Search
                                         </button>
-                                    </div>
+                                    </div> 
 
-                                    <template x-if="countries" x-for="(country, index) in countries">
-                                        <div class="p-6 last:border-none border-t border-gray-200 dark:border-gray-700 w-full" x-show="country !== 'Undefined'">
-                                            <div class="flex items-center">
-                                                <img :src="country.flags.svg" :alt="country.name.common + 'flag'" width="75" />
-                                                <div x-text="country.name.common" class="ml-4 text-lg leading-7 font-semibold"></div>
+                                    <template x-if="countries == !null" x-for="(country, index) in countries">
+                                        <div>
+                                            <div x-show="!country.name">
+                                                <p class="text-center text-gray-500">
+                                                    No countries found.
+                                                </p>
                                             </div>
-                                            <table class="ml-24 mt-2 text-md text-gray-300">
-                                                <tr><td x-show="country.cca2" class="font-semibold">Country Code 2: </td><td x-text="country.cca2"></td></tr>
-                                                <tr><td x-show="country.cca3" class="font-semibold">Country Code 3: </td><td x-text="country.cca3"></td></tr>
-                                                <tr><td x-show="country.region" class="font-semibold">Region: </td><td x-text="country.region"></td></tr>
-                                                <tr><td x-show="country.subregion" class="font-semibold">Subregion: </td><td x-text="country.subregion"></td></tr>
-                                                <tr><td x-show="country.population" class="font-semibold">Population: </td><td x-text="country.population"></td></tr>
-                                                <tr><td x-show="country.languages" class="pr-2 font-semibold">Languages Spoken:</td>
-                                                    <td><ul>
-                                                        <template x-for="language in country.languages">
-                                                            <span><span x-text="language"></span> </span>
-                                                        </template>
-                                                    </td></ul>
-                                                </tr>
-                                            </table>
+                                            <div class="p-6 last:border-none border-t border-gray-200 dark:border-gray-700 w-full" x-show="country.name !== 'Undefined'">
+                                                <div class="flex items-center">
+                                                    <img :src="country.flags.svg" :alt="country.name.common + 'flag'" width="75" />
+                                                    <div x-text="country.name.common" class="ml-4 text-lg leading-7 font-semibold"></div>
+                                                </div>
+                                                <table class="ml-24 mt-2 text-md text-gray-300">
+                                                    <tr><td x-show="country.cca2" class="font-semibold">Country Code 2: </td><td x-text="country.cca2"></td></tr>
+                                                    <tr><td x-show="country.cca3" class="font-semibold">Country Code 3: </td><td x-text="country.cca3"></td></tr>
+                                                    <tr><td x-show="country.region" class="font-semibold">Region: </td><td x-text="country.region"></td></tr>
+                                                    <tr><td x-show="country.subregion" class="font-semibold">Subregion: </td><td x-text="country.subregion"></td></tr>
+                                                    <tr><td x-show="country.population" class="font-semibold">Population: </td><td x-text="country.population"></td></tr>
+                                                    <tr><td x-show="country.languages" class="pr-2 font-semibold">Languages Spoken:</td>
+                                                        <td><ul>
+                                                            <template x-for="language in country.languages">
+                                                                <span><span x-text="language"></span> </span>
+                                                            </template>
+                                                        </td></ul>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </template>
+
+                                    <table x-init="$watch('countries', value => console.log(countries))">
+                                        <tr><td># of Countries: </td><td x-text="countries.length"></td></tr>
+                                        
+                                        {{-- This section is being weird due to alpine strangeness --}}
+                                        {{-- <template x-if="countries" x-for="(country, index) in countries">
+                                            <div>
+                                            <tr><td x-show="country.region" class="font-semibold">Regions: </td><td x-text="country.region"></td></tr>
+                                            <tr><td x-show="country.subregion" class="font-semibold">Subregions: </td><td x-text="country.subregion"></td></tr>
+                                            </div>
+                                        </template> --}}
+                                    </table>
+
                                 </div>
                             </div>
                         </div>
