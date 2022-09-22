@@ -30,16 +30,6 @@
 
         <!-- App Script -->
         <script>
-            function greet() {
-                return {
-                message: "Hello Alpine.js",
-                messageDisplay: "",
-                showMessage() {
-                    this.messageDisplay = this.message;
-                }
-                };
-            }
-
             function searchRESTCountries() {
                 return {
                     searchRESTCountries: '',
