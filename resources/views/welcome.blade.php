@@ -78,7 +78,7 @@
                         <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
                             <div class="items-center">
                                 <div x-data="searchRESTCountries()">
-                                    <div class="mb-8">
+                                    <form class="mb-8" @submit.stop.prevent="fetchCountries()">
                                         <span class="text-white mr-4">Country Search:</span>
                                         <input
                                             type="text"
@@ -89,14 +89,11 @@
                                         />
                                         <button
                                             type="submit"
-                                            @click="fetchCountries()"
-                                            @keyup.enter="fetchCountries()"
-                                            :disabled="isLoading"
                                             class="px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-sm shadow-sm"
                                         >
                                             Search
                                         </button>
-                                    </div> 
+                                    </form> 
 
                                     <template x-if="countries == !null" x-for="(country, index) in countries">
                                         <div>
